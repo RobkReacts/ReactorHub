@@ -48,7 +48,7 @@
 }
 .generatedLink{
 	display:block;
-
+	word-break: break-all;
 }
 
 .timeSeparator{
