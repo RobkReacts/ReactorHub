@@ -9,20 +9,19 @@
 			 <div id='player'></div>
 		</div>
 
+		<script language="javascript" type="text/javascript" src="URLUtils.js"></script>
 		<script>
-
-			function getVideoIdFromURL(url) {
-			  //console.log("Function url is: " + url);
-			  delimiter = '/',
-			  start = 3,
-			  tokens = url.split(delimiter).slice(start),
-			  result = tokens.join(delimiter); // those.that
-			  //console.log("Function url pathname is: " + result);
-			  return result;
+			
+			if(localStorage.getItem("talentStart") === null)
+			{
+				// unless the start time was specified we try to infer the start time from the url
+				localStorage.setItem("talentStart", URLUtils.VM.getStartTimeFromURL(localStorage.getItem("talentURL")));
 			}
 			
+			
+			
 			var VMoptions = {
-			  id: getVideoIdFromURL(localStorage.getItem("talentURL")),
+			  id: URLUtils.VM.getVideoIdFromURL(localStorage.getItem("talentURL")),
 			  width: 640
 			};
 
@@ -66,11 +65,18 @@
 				}
 			}
 			
+			var firstPlay = true;
 			function runcommand(command) {
 			// console.log("talentDM: running command: " + command);
 			switch(command) {
 				case "play":
-					player.play();
+					if(firstPlay){
+						firstPlay = false;
+						player.setCurrentTime(localStorage.getItem("talentStart")); // set time AND start playing the video
+					} else
+					{
+						player.play();
+					}
 					break;
 				case "pause":
 					player.pause();

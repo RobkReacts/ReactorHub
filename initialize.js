@@ -5,23 +5,9 @@ function resizeIframe(obj) {
   obj.style.width = obj.contentWindow.document.body.scrollWidth + 'px';
 }
 
-function detectProvider(url)
-{
-	var youtubeUrls = [/youtube/,/youtu\.be/];
-	var dailymotionUrls = [/dailymotion/,/dai\.ly/];
-	var vimeoUrls = [/vimeo/];
-	var streamableUrls = [/streamable/];
-	
-	if(youtubeUrls.some(function(rx) { return rx.test(url);})) return "YT";
-	if(dailymotionUrls.some(function(rx) { return rx.test(url);})) return "DM";
-	if(vimeoUrls.some(function(rx) { return rx.test(url);})) return "VM";
-	if(streamableUrls.some(function(rx) { return rx.test(url);})) return "Streamable";
-	
-	return "UNKOWN";
-}
-
 //Clear all the Storage
 localStorage.removeItem("reactorStart");
+localStorage.removeItem("talentStart");
 localStorage.removeItem("reactorVOL");
 localStorage.removeItem("talentVOL");
 localStorage.removeItem("provider");
@@ -36,7 +22,7 @@ var url = new URL(url_string);
 // Reactor start time
 //console.log("Start parameter is: " + url.searchParams.get("Start"));
 if (url.searchParams.get("Start") !== null) {
-	reactorStart = url.searchParams.get("Start");
+	var reactorStart = url.searchParams.get("Start");
 	//  console.log("Reactor Start Time: " + url.searchParams.get("Start"));
 	var hms = reactorStart;   // your input string
 	var a = hms.split(':'); // split it at the colons
@@ -49,6 +35,20 @@ if (url.searchParams.get("Start") !== null) {
 //  console.log(seconds);
   localStorage.setItem("reactorStart", seconds );
 }
+
+if (url.searchParams.get("talentStart") !== null) {
+	var TalentStart = url.searchParams.get("talentStart");
+	var hms = TalentStart;   
+	var a = hms.split(':');
+	var seconds = 0;
+	var mult = 1;
+	while (a.length > 0) {
+		seconds += mult * parseInt(a.pop(), 10);
+		mult *= 60;
+	}
+  localStorage.setItem("talentStart", seconds );
+}
+
 // Control commands
 if (url.searchParams.get("Control") !== null) {
   controlList = url.searchParams.get("Control");
@@ -112,9 +112,9 @@ if (url.searchParams.get("StreamabletalentVOL") !== null) {
 localStorage.setItem("talentVOL", talentVOL);
 
 
-localStorage.setItem("provider", detectProvider(url.searchParams.get("talent")));
-localStorage.setItem("talentURL", url.searchParams.get("talent"));
-localStorage.setItem("reactorURL", url.searchParams.get("reactor"));
+localStorage.setItem("provider", URLUtils.detectProvider(url.searchParams.get("talent")));
+localStorage.setItem("talentURL", decodeURIComponent(url.searchParams.get("talent")));
+localStorage.setItem("reactorURL", decodeURIComponent(url.searchParams.get("reactor")));
 
 // ---- retro compatibility ----
 if (url.searchParams.get("YTtalent") !== null) {

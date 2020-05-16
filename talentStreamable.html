@@ -10,25 +10,23 @@
 		<div class="embed-responsive embed-responsive-16by9">
 			<iframe id='player' allow="autoplay" autoplay="false" src="" frameborder="0" allowfullscreen></iframe>
 		</div>
-
+		
+		<script language="javascript" type="text/javascript" src="URLUtils.js"></script>
 		<script>
-			function getVideoIdFromURL(url) {
-				//console.log("Function url is: " + url);
-				delimiter = '/',
-				start = 3,
-				tokens = url.split(delimiter).slice(start),
-				result = tokens.join(delimiter); // those.that
-				//console.log("Function url pathname is: " + result);
-				return result;
+			
+			
+			if(localStorage.getItem("talentStart") === null)
+			{
+				// unless the start time was specified we try to infer the start time from the url
+				localStorage.setItem("talentStart", URLUtils.Streamable.getStartTimeFromURL(localStorage.getItem("talentURL")));
 			}
 
-
 			var iframe = document.getElementById('player');
-			iframe.src = "https://streamable.com/s/" + getVideoIdFromURL(localStorage.getItem("talentURL"))
+			iframe.src = "https://streamable.com/s/" + URLUtils.Streamable.getVideoIdFromURL(localStorage.getItem("talentURL"))
 			var player = new playerjs.Player(document.getElementById('player'));
-			// https://streamable.com/c6qg2
 			
-			//Handle video ending (seek back to zero time)//
+			
+			//Handle video ending (seek back to zero time)
 			player.setLoop(false); //disable video loop
 			
 			var cueList=[[]];
@@ -80,6 +78,7 @@
 				}
 			}
 			player.on('ready', () => {
+				player.setCurrentTime(localStorage.getItem("talentStart"));
 				player.setVolume(parseFloat(localStorage.getItem("talentVOL")));
 				timeupdater = setInterval(cueListener, 100);
 			});

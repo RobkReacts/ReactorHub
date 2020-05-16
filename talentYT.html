@@ -10,18 +10,15 @@
 	  <div id="talent"></div>
 	</div>
 	
+	<script language="javascript" type="text/javascript" src="URLUtils.js"></script>
 	<script>
 
-	function getVideoIdFromURL(url) {
-
-		// from : https://stackoverflow.com/questions/3452546/how-do-i-get-the-youtube-video-id-from-a-url
-		var rx = /^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/)|(?:(?:watch)?\?v(?:i)?=|\&v(?:i)?=))([^#\&\?]*).*/;
-		var matches = url.match(rx);
-		var result = matches[1];
-
-		return result;
+	
+	if(localStorage.getItem("talentStart") === null)
+	{
+		// unless the start time was specified we try to infer the start time from the url
+		localStorage.setItem("talentStart", URLUtils.YT.getStartTimeFromURL(localStorage.getItem("talentURL")));
 	}
-
 
       // 2. This code loads the IFrame Player API code asynchronously.
       var tag = document.createElement('script');
@@ -38,8 +35,8 @@
         player = new YT.Player('talent', {
           // height: '400',
           // width: '100%',
-          playerVars: { 'enablejsapi' : 1, 'autoplay': 0, 'controls': 1,'rel': 0, 'autohide':1,'wmode':'opaque','origin': location.origin },
-          videoId: getVideoIdFromURL(localStorage.getItem("talentURL")),
+          playerVars: { 'enablejsapi' : 1, 'autoplay': 0, 'controls': 1,'rel': 0, 'autohide':1,'wmode':'opaque','origin': location.origin, 'start': localStorage.getItem("talentStart") },
+          videoId: URLUtils.YT.getVideoIdFromURL(localStorage.getItem("talentURL")),
           events: {
             'onReady': onPlayerReady,
             'onStateChange': onPlayerStateChange
@@ -113,7 +110,7 @@
       }
 
       function runcommand(command) {
-        // console.log(" running command: " + command);
+        console.log(" running command: " + command);
         switch(command) {
           case "play":
             player.playVideo();

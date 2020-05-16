@@ -11,20 +11,19 @@
 		</div>
 
 
+		<script language="javascript" type="text/javascript" src="URLUtils.js"></script>
 		<script>
-			function getVideoIdFromURL(url) {
-			//  console.log("Function url is: " + url);
-			  delimiter = '/',
-			  start = 4,
-			  tokens = url.split(delimiter).slice(start),
-			  result = tokens.join(delimiter); // those.that
-			//  console.log("Function url pathname is: " + result);
-			  return result;
+						
+			if(localStorage.getItem("talentStart") === null)
+			{
+				// unless the start time was specified we try to infer the start time from the url
+				localStorage.setItem("talentStart", URLUtils.DM.getStartTimeFromURL(localStorage.getItem("talentURL")));
 			}
+
 
 			var videotime = 0;
 			var player = DM.player(document.getElementById('player'), {
-				video: getVideoIdFromURL(localStorage.getItem("talentURL")),
+				video: URLUtils.DM.getVideoIdFromURL(localStorage.getItem("talentURL")),
 				//    width: '100%',
 				//    height: '100%',
 				//    queue-autoplay-next: false,
@@ -32,7 +31,8 @@
 				  autoplay: false,
 				  'queue-autoplay-next': false,
 				  quality: 'auto',
-				  mute: false
+				  mute: false,
+				  start: localStorage.getItem("talentStart")
 				}
 			});
 
