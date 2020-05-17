@@ -12,18 +12,10 @@
 	</div>
 
 
-
+	
+	<script language="javascript" type="text/javascript" src="URLUtils.js"></script>
     <script>
-
-	function getVideoIdFromURL(url) {
-	//  console.log("Function url is: " + url);
-	  delimiter = '=',
-	  start = 1,
-	  tokens = url.split(delimiter).slice(start),
-	  result = tokens.join(delimiter); // those.that
-	//  console.log("Function url pathname is: " + result);
-	  return result;
-	}
+	
       // 2. This code loads the IFrame Player API code asynchronously.
       var tag = document.createElement('script');
 
@@ -45,7 +37,7 @@
           // width: '100%',
 		  
           playerVars: { 'enablejsapi' : 1, 'autoplay': 0, 'controls': 1,'rel': 0, 'autohide':1,'wmode':'opaque','origin': location.origin,'start':startTime },
-          videoId: getVideoIdFromURL(localStorage.getItem("reactorURL")),
+          videoId: URLUtils.YT.getVideoIdFromURL(localStorage.getItem("reactorURL")),
           //start: 180,
           events: {
             'onReady': onPlayerReady,
