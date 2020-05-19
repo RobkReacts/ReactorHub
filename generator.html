@@ -88,11 +88,11 @@
 					<div class="form-group col-lg-3">
 						<label>Sync start at: </label>
 						<div class="input-group ">
-							<input id="syncStartTimeHH" name="syncStartTimeHH" type="number" value="00" min="0" onblur="padNumberInput(this,2);" required class="form-control"> 
+							<input id="syncStartTimeHH" name="syncStartTimeHH" type="number" value="00" min="0" onchange="validateSyncTimings(this);" onblur="padNumberInput(this,2);" required class="form-control"> 
 							<span class="input-group-text timeSeparator">:</span>
-							<input id="syncStartTimeMM" name="syncStartTimeMM" type="number" value="00" min="0" max="59" onblur="padNumberInput(this,2);" required class="form-control"> 
+							<input id="syncStartTimeMM" name="syncStartTimeMM" type="number" value="00" min="0" max="59" onchange="validateSyncTimings(this);" onblur="padNumberInput(this,2);" required class="form-control"> 
 							<span class="input-group-text timeSeparator">:</span>
-							<input id="syncStartTimeSS" name="syncStartTimeSS" type="number" value="00" min="0" max="59" onblur="padNumberInput(this,2);" required class="form-control"> 
+							<input id="syncStartTimeSS" name="syncStartTimeSS" type="number" value="00" min="0" max="59" onchange="validateSyncTimings(this);" onblur="padNumberInput(this,2);" required class="form-control"> 
 							
 						</div>
 						<p class="form-text text-muted small">Format: hh:mm:ss</p>
@@ -101,11 +101,11 @@
 					<div class="form-group col-lg-3">
 						<label>Sync stop at: </label>
 						<div class="input-group ">
-							<input id="syncStopTimeHH" name="syncStopTimeHH" type="number" value="00" min="0" onblur="padNumberInput(this,2);" required class="form-control"> 
+							<input id="syncStopTimeHH" name="syncStopTimeHH" type="number" value="00" min="0" onchange="validateSyncTimings(this);" onblur="padNumberInput(this,2);" required class="form-control"> 
 							<span class="input-group-text timeSeparator">:</span>
-							<input id="syncStopTimeMM" name="syncStopTimeMM" type="number" value="00" min="0" max="59" onblur="padNumberInput(this,2);" required class="form-control"> 
+							<input id="syncStopTimeMM" name="syncStopTimeMM" type="number" value="00" min="0" max="59" onchange="validateSyncTimings(this);" onblur="padNumberInput(this,2);" required class="form-control"> 
 							<span class="input-group-text timeSeparator">:</span>
-							<input id="syncStopTimeSS" name="syncStopTimeSS" type="number" value="00" min="0" max="59" onblur="padNumberInput(this,2);" required class="form-control"> 
+							<input id="syncStopTimeSS" name="syncStopTimeSS" type="number" value="00" min="0" max="59" onchange="validateSyncTimings(this);" onblur="padNumberInput(this,2);" required class="form-control"> 
 							
 						</div>
 						<p class="form-text text-muted small">Format: hh:mm:ss</p>
@@ -150,11 +150,11 @@
 									</i>                                                                                                        			                    					\
 									Pause at:                                                                                                   			                    					\
 								</label>                                                                                                        			                    					\
-								<input id="extraPauseHH" name="extraPauseHH[]" type="number" value="00" min="0" onblur="padNumberInput(this,2);" required class="form-control ">                 \
+								<input id="extraPauseHH" name="extraPauseHH[]" type="number" value="00" min="0" onchange="validatePauseTimings();" onblur="padNumberInput(this,2);" required class="form-control ">                 \
 								<span class="input-group-text timeSeparator">:</span>                                                            			                    					\
-								<input id="extraPauseMM" name="extraPauseMM[]" type="number" value="00" min="0" max="59" onblur="padNumberInput(this,2);" required class="form-control ">       \
+								<input id="extraPauseMM" name="extraPauseMM[]" type="number" value="00" min="0" max="59" onchange="validatePauseTimings();" onblur="padNumberInput(this,2);" required class="form-control ">       \
 								<span class="input-group-text timeSeparator">:</span>                                                            			                    					\
-								<input id="extraPauseSS" name="extraPauseSS[]" type="number" value="00" min="0" max="59" onblur="padNumberInput(this,2);" required class="form-control ">       \
+								<input id="extraPauseSS" name="extraPauseSS[]" type="number" value="00" min="0" max="59" onchange="validatePauseTimings();" onblur="padNumberInput(this,2);" required class="form-control ">       \
 								<div class="col-1" ></div>                                                                            						                    					\
 								<label class="col-form-label col-2 align-middle d-inline-flex" >                                         			                    					        \
 									<i class="material-icons pr-1">                                                                             			                    					\
@@ -162,11 +162,11 @@
 									</i>                                                                                                        			                    					\
 									Resume at:                                                                                                  			                    					\
 								</label>                                                                                                        			                    					\
-								<input id="extraPlayHH" name="extraPlayHH[]" type="number" value="00" min="0" onblur="padNumberInput(this,2);" required class="form-control ">                  \
+								<input id="extraPlayHH" name="extraPlayHH[]" type="number" value="00" min="0" onchange="validatePauseTimings();" required class="form-control ">                  \
 								<span class="input-group-text timeSeparator">:</span>                                                           			                    					\
-								<input id="extraPlayMM" name="extraPlayMM[]" type="number" value="00" min="0" max="59" onblur="padNumberInput(this,2);" required class="form-control ">         \
+								<input id="extraPlayMM" name="extraPlayMM[]" type="number" value="00" min="0" max="59" onchange="validatePauseTimings();" onblur="padNumberInput(this,2);" required class="form-control ">         \
 								<span class="input-group-text timeSeparator">:</span>                                                           			                    					\
-								<input id="extraPlaySS" name="extraPlaySS[]" type="number" value="00" min="0" max="59" onblur="padNumberInput(this,2);" required class="form-control ">         \
+								<input id="extraPlaySS" name="extraPlaySS[]" type="number" value="00" min="0" max="59" onchange="validatePauseTimings();" onblur="padNumberInput(this,2);" required class="form-control ">         \
 								<button type="button" class="btn btn-danger ml-4 align-middle d-inline-flex" onclick="removeExtraPause(this);" >                                					\
 									<i class="material-icons pr-1">remove</i> Remove pause                                                                                      					\
 								</button>                                                                                                                                       					\
@@ -174,7 +174,8 @@
 					</div>	                                                                                                                    			                    					\
 				</div>                                                                                                                          			                    					\
 				');
-			
+				
+				validatePauseTimings();
 			}
 			
 			function removeExtraPause(button)
@@ -305,6 +306,91 @@
 				}
 			}
 			
+			
+			function validatePauseTimings()
+			{			
+				var form = document.getElementById("form");
+			
+				var arrayExtraPauseHH = form.querySelectorAll("input[name='extraPauseHH[]']");
+				var arrayExtraPauseMM = form.querySelectorAll("input[name='extraPauseMM[]']");
+				var arrayExtraPauseSS = form.querySelectorAll("input[name='extraPauseSS[]']");
+				var arrayExtraPlayHH = form.querySelectorAll("input[name='extraPlayHH[]']");
+				var arrayExtraPlayMM = form.querySelectorAll("input[name='extraPlayMM[]']");
+				var arrayExtraPlaySS = form.querySelectorAll("input[name='extraPlaySS[]']");
+				
+				var syncStartTime = parseInt(form.syncStartTimeHH.value,10) * 3600 + parseInt(form.syncStartTimeMM.value,10) * 60 + parseInt(form.syncStartTimeSS.value,10);
+				var syncStopTime = parseInt(form.syncStopTimeHH.value,10) * 3600 + parseInt(form.syncStopTimeMM.value,10) * 60 + parseInt(form.syncStopTimeSS.value,10);
+				
+				
+				for(var i = 0; i < arrayExtraPauseHH.length; i++)
+				{
+					arrayExtraPauseHH[i].setCustomValidity("");
+					arrayExtraPauseMM[i].setCustomValidity("");
+					arrayExtraPauseSS[i].setCustomValidity("");
+					arrayExtraPlayHH[i].setCustomValidity("");
+					arrayExtraPlayMM[i].setCustomValidity("");
+					arrayExtraPlaySS[i].setCustomValidity("");
+					
+					var pauseStartTime = parseInt(arrayExtraPauseHH[i].value,10) * 3600 + parseInt(arrayExtraPauseMM[i].value,10) * 60 + parseInt(arrayExtraPauseSS[i].value,10);
+					var pauseResumeTime = parseInt(arrayExtraPlayHH[i].value,10) * 3600 + parseInt(arrayExtraPlayMM[i].value,10) * 60 + parseInt(arrayExtraPlaySS[i].value,10);
+					
+					// check that sync start < pause start (< sync stop)
+					if(pauseStartTime <= syncStartTime)
+					{
+						arrayExtraPauseMM[i].setCustomValidity("Pause timer incorrect: pause starts before the start of the synchronized reaction");
+					}
+					
+					if(syncStopTime > 0 && pauseStartTime >= syncStopTime)
+					{
+						arrayExtraPauseMM[i].setCustomValidity("Pause timer incorrect: pause starts after the end of the synchronized reaction");
+					}
+					
+					// check that pause start > previous pause resume
+					if(i > 0)
+					{
+						var previousPauseResumeTime = parseInt(arrayExtraPlayHH[i-1].value,10) * 3600 + parseInt(arrayExtraPlayMM[i-1].value,10) * 60 + parseInt(arrayExtraPlaySS[i-1].value,10);
+						
+						if(pauseStartTime < previousPauseResumeTime)
+						{
+							arrayExtraPauseMM[i].setCustomValidity("Pause timer incorrect: pause can't start before the previous one ended");
+						}
+					}
+					
+					// check that pause resume time < sync stop
+					if(syncStopTime > 0 && pauseResumeTime >= syncStopTime)
+					{
+						arrayExtraPlayMM[i].setCustomValidity("Pause timer incorrect: pause end after the end of the synchronized reaction");
+					}
+					
+					// check that pause end > pause start
+					if(pauseStartTime >= pauseResumeTime)
+					{
+						arrayExtraPlayMM[i].setCustomValidity("Pause timer incorrect: resume time is smaller than pause time");
+					}
+				}
+			}
+			
+			
+			function validateSyncTimings()
+			{
+				var form = document.getElementById("form");
+
+				form.syncStartTimeMM.setCustomValidity("");
+				form.syncStopTimeMM.setCustomValidity("");
+				
+				var syncStartTime = parseInt(form.syncStartTimeHH.value,10) * 3600 + parseInt(form.syncStartTimeMM.value,10) * 60 + parseInt(form.syncStartTimeSS.value,10);
+				var syncStopTime = parseInt(form.syncStopTimeHH.value,10) * 3600 + parseInt(form.syncStopTimeMM.value,10) * 60 + parseInt(form.syncStopTimeSS.value,10);
+				
+				if((syncStopTime > 0) &&  (syncStopTime <= syncStartTime))
+				{
+					form.syncStopTimeMM.setCustomValidity("Sync timers incorrect: sync stop time should be greater than sync start time");
+				}
+				
+				//revalidate pause timing since they can be (in)validated with the sync timing changes
+				validatePauseTimings();
+			}
+			
+						
 						
 		</script>
 	</body>
