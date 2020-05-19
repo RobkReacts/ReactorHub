@@ -84,18 +84,7 @@
 				
 				<span class="formGroupTitle">Timing</span>
 				<div class="form-row">
-					<!-- <div class="form-group col-lg-3"> -->
-						<!-- <label>Start reactor video at: </label> -->
-						<!-- <div class="input-group "> -->
-							<!-- <input id="startTimeHH" name="startTimeHH" type="number" value="00" min="0" onblur="padNumberInput(this,2);" required class="form-control">  -->
-							<!-- <span class="input-group-text timeSeparator">:</span> -->
-							<!-- <input id="startTimeMM" name="startTimeMM" type="number" value="00" min="0" max="59" onblur="padNumberInput(this,2);" required class="form-control">  -->
-							<!-- <span class="input-group-text timeSeparator">:</span> -->
-							<!-- <input id="startTimeSS" name="startTimeSS" type="number" value="00" min="0" max="59" onblur="padNumberInput(this,2);" required class="form-control">  -->
-						<!-- </div> -->
-						<!-- <small class="form-text text-muted" >Format: hh:mm:ss</small> -->
-					<!-- </div> -->
-					<!-- <div class="form-group col-lg-1"></div> -->
+					
 					<div class="form-group col-lg-3">
 						<label>Sync start at: </label>
 						<div class="input-group ">
@@ -107,7 +96,20 @@
 							
 						</div>
 						<p class="form-text text-muted small">Format: hh:mm:ss</p>
-						<!-- <input id="syncStartTime" name="syncStartTime" type="text" value="00:00" required class="form-control col-sm-6"> -->
+					</div>
+					<div class="form-group col-lg-2"></div>
+					<div class="form-group col-lg-3">
+						<label>Sync stop at: </label>
+						<div class="input-group ">
+							<input id="syncStopTimeHH" name="syncStopTimeHH" type="number" value="00" min="0" onblur="padNumberInput(this,2);" required class="form-control"> 
+							<span class="input-group-text timeSeparator">:</span>
+							<input id="syncStopTimeMM" name="syncStopTimeMM" type="number" value="00" min="0" max="59" onblur="padNumberInput(this,2);" required class="form-control"> 
+							<span class="input-group-text timeSeparator">:</span>
+							<input id="syncStopTimeSS" name="syncStopTimeSS" type="number" value="00" min="0" max="59" onblur="padNumberInput(this,2);" required class="form-control"> 
+							
+						</div>
+						<p class="form-text text-muted small">Format: hh:mm:ss</p>
+						
 					</div>
 				</div>
 				<span class="formGroupTitle">Extra steps:</span>
@@ -195,6 +197,7 @@
 				var talentVOL = form.talentVOL.value;
 				var startTime = form.startTimeHH.value + ":" + form.startTimeMM.value + ":" + form.startTimeSS.value;
 				var syncStartTime = form.syncStartTimeHH.value + ":" + form.syncStartTimeMM.value + ":" + form.syncStartTimeSS.value;
+				var syncStopTime = form.syncStopTimeHH.value + ":" + form.syncStopTimeMM.value + ":" + form.syncStopTimeSS.value;
 				var talentStartTime = form.talentStartTimeHH.value + ":" + form.talentStartTimeMM.value + ":" + form.talentStartTimeSS.value;
 				
 				var extraPauses = "";
@@ -216,6 +219,12 @@
 					
 				}
 				
+				var stopControl = "";
+				
+				if(syncStopTime != "00:00:00")
+				{
+					stopControl = ";" + syncStopTime + ",pause";
+				}
 
 				var generatedLink = reactorhubEndpoint +
 									"?reactor=" +
@@ -233,7 +242,8 @@
 									"&Control=" +
 									syncStartTime + 
 									",play" +
-									extraPauses ;
+									extraPauses +
+									stopControl ;
 
 				document.getElementById('reactorHubLinkResult').innerHTML = generatedLink;
 				document.getElementById('reactorHubLinkResult').href = generatedLink;
@@ -295,6 +305,7 @@
 				}
 			}
 			
+						
 		</script>
 	</body>
 </html>
