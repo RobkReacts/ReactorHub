@@ -11,6 +11,17 @@
 		#reactorhubTitle{
 			white-space: nowrap;
 		}
+		@media (max-width: 991.98px) { 
+			#reactorhubTitle {
+				font-size: 1.3rem;
+			}
+			#SwitchThemeButton{
+				font-size: 0.9rem;
+			}
+		 }
+		
+		
+		
 	</style>
 	
 	</head>
@@ -19,18 +30,18 @@
 		<div class="container-fluid">
 			
 			<header class="pb-lg-3">
-				<nav class="navbar navbar-expand-lg bg-transparent justify-content-between" id="navbar">
+				<nav class="navbar navbar-expand-lg bg-transparent justify-content-between px-0" id="navbar">
 					<div class="container-fluid">
 
 						<div class="navbar-collapse collapse dual-nav w-50 order-0  .d-none .d-lg-block">
 							
 						</div>
-						<h3 id="reactorhubTitle" class="navbar-text  d-block  text-center order-0 order-lg-1 w-25 mb-0">Reactor Hub <small class="text-muted">Beta 2</small></h3>
+						<p id="reactorhubTitle" class="navbar-text  d-block  text-center order-0 order-lg-1 w-25 mb-0 h3">Reactor Hub <small class="text-muted">Beta 2</small></o>
 
 						<div class="navbar-nav dual-nav w-50 order-2 justify-content-end">
 							<ul class="navbar-nav ml-auto">
 								<li class="nav-item">
-									<button class=" btn btn-dark" id="SwitchThemeButton" onclick="SwitchTheme()">Dark Mode</button>
+									<button class=" btn btn-dark " id="SwitchThemeButton" onclick="SwitchTheme()">Dark Mode</button>
 								</li>
 							</ul>
 						</div>
@@ -52,6 +63,9 @@
 					</div>
 				</div>
 			</div>
+			<div class="row">
+				<div id="DiscordMessage" class="pt-lg-3 py-2 mx-auto">For help or feedback, join us on <a href="https://discord.gg/cPrSypT" target="_blank"><img id="DiscordLogo" src="Discord-Logo-Color.png" height="20pw"/>Discord!<a/></div>
+			</div>
 		</div>
 		
 		<script language="javascript" type="text/javascript" src="URLUtils.js"></script>
@@ -70,6 +84,7 @@
 				
 				if(darkTheme === "true"){
 					document.getElementById("navbar").classList.add("navbar-dark");
+					document.getElementById("DiscordMessage").classList.add("text-light");
 					document.getElementById("reactorhubTitle").classList.add("dark-theme");
 					document.body.classList.add("dark-theme");
 					button.innerHTML = "Light theme";
@@ -78,6 +93,7 @@
 				}
 				else{
 					document.getElementById("navbar").classList.remove("navbar-dark");
+					document.getElementById("DiscordMessage").classList.remove("text-light");
 					document.getElementById("reactorhubTitle").classList.remove("dark-theme");
 					document.body.classList.remove("dark-theme");
 					button.innerHTML = "Dark theme";

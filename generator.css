@@ -10,6 +10,21 @@
     border-bottom-style: solid;
     border-bottom-width: 2px;
 }
+#DiscordMessage
+{
+	display:inline-block;
+	margin-bottom: 10px;
+	vertical-align: bottom;
+}
+
+#DiscordLogo
+{
+	display:inline-block;
+	width:auto;
+	height:20px;
+}
+
+
 
 .formGroupTitle{
 	font-size:1.5rem;
