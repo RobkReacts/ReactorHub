@@ -1,135 +1,398 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-	<style>
-		body.dark-theme{
-			background-color: #101010;
-		}
-		#reactorhubTitle{
-			white-space: nowrap;
-		}
-		@media (max-width: 991.98px) { 
-			#reactorhubTitle {
-				font-size: 1.3rem;
-			}
-			#SwitchThemeButton{
-				font-size: 0.9rem;
-			}
-		 }
-		
-		
-		
-	</style>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<link rel="stylesheet" href="generator.css">
 	
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+	<title>Reactorhub link generator</title>
 	</head>
-		
 	<body>
-		<div class="container-fluid">
-			
-			<header class="pb-lg-3">
-				<nav class="navbar navbar-expand-lg bg-transparent justify-content-between px-0" id="navbar">
-					<div class="container-fluid">
-
-						<div class="navbar-collapse collapse dual-nav w-50 order-0  .d-none .d-lg-block">
-							
-						</div>
-						<p id="reactorhubTitle" class="navbar-text  d-block  text-center order-0 order-lg-1 w-25 mb-0 h3">Reactor Hub <small class="text-muted">Beta 2</small></o>
-
-						<div class="navbar-nav dual-nav w-50 order-2 justify-content-end">
-							<ul class="navbar-nav ml-auto">
-								<li class="nav-item">
-									<button class=" btn btn-dark " id="SwitchThemeButton" onclick="SwitchTheme()">Dark Mode</button>
-								</li>
+		<div class="container-fluid w-75 mt-lg-5">
+			<span class="pageTitle">Reactorhub link generator</span>
+			<div id="DiscordMessage" class="ml-lg-4">For help or feedback, join us on <a href="https://discord.gg/xrenPjZbBm" target="_blank"><img id="DiscordLogo" src="Discord-Logo-Color.png"/>Discord!<a/></div>
+			<form id="form" onsubmit="event.preventDefault();  generateLink(this);" >
+				<span class="formGroupTitle">Reaction video</span>
+				<div class="form-row">
+					
+					<div class="form-group col-lg-4">
+						<label for="reactorURL" >URL : </label>
+						<input id="reactorURL" name="reactorURL" type="text" required class="form-control mh-sm-3" aria-describedby="reactorURLHelp" >
+						<div id="reactorURLHelp" class="form-text text-muted small" >
+							<span>Plateforms supported:</span>
+							<ul class=" ">
+							  <li>Youtube - example : https://www.youtube.com/watch?v=xxxxxxxx</li>
 							</ul>
 						</div>
 					</div>
-				</nav>
-			</header>
-			
-			
-		
-			<div class="row">
-				<div class="col-lg-6 col-lg-no-padding col-12 pb-1">
-					<div class="embed-responsive embed-responsive-16by9">
-						<iframe src="reactor.html" frameborder="0" scrolling="no" allowfullscreen></iframe>
+					<div class="form-group col-lg-1">
+						<label for="reactorVOL" >Volume (%): </label>
+						<input id="reactorVOL" name="reactorVOL" type="number" min="0" max="100" value="50" required class="form-control col-lg-10">
+					</div>
+					
+					<div class="form-group col-lg-3">
+						<label>Start reactor video at:</label>
+						<div class="input-group ">
+							<input id="startTimeHH" name="startTimeHH" type="number" value="00" min="0" onblur="padNumberInput(this,2);" required class="form-control"> 
+							<span class="input-group-text timeSeparator">:</span>
+							<input id="startTimeMM" name="startTimeMM" type="number" value="00" min="0" max="59" onblur="padNumberInput(this,2);" required class="form-control"> 
+							<span class="input-group-text timeSeparator">:</span>
+							<input id="startTimeSS" name="startTimeSS" type="number" value="00" min="0" max="59" onblur="padNumberInput(this,2);" required class="form-control"> 
+						</div>
+						<p class="form-text text-muted small">Format: hh:mm:ss</p>
+					</div>
+					
+					
+				</div>
+				
+				<span class="formGroupTitle">Talent video</span>
+				<div class="form-row">
+					<div class="form-group col-lg-4">
+						<label for="reactorURL" >URL : </label>
+						<input id="talentURL" name="talentURL" type="text" required class="form-control" aria-describedby="talentURLHelp" oninput="validateTalentUrl(this)">
+						<div id="talentURLHelp" class="form-text text-muted small" >
+							<span>Plateforms supported:</span>
+							<ul class=" ">
+							  <li>Youtube - <i>example : https://www.youtube.com/watch?v=xxxxxxxx</i></li>
+							  <li>Dailymotion - <i>example : https://www.dailymotion.com/video/xxxxxxxxxxxxxxxxxxx</i></li>
+							  <li>Vimeo - <i>example : https://vimeo.com/xxxxxxxxx</i></li>
+							  <li>Streamable - <i>example : https://streamable.com/xxxxx</i></li>
+							</ul>
+						</div>
+					</div>
+					<div class="form-group col-lg-1">
+						<label for="talentVOL" >Volume (%): </label>
+						<input id="talentVOL" name="talentVOL" type="number" min="0" max="100" value="50" required class="form-control col-lg-10">
+					</div>
+					
+					<div class="form-group col-lg-3">
+						<label>Start talent video at:</label>
+						<div class="input-group">
+							<input id="talentStartTimeHH" name="talentStartTimeHH" type="number" value="00" min="0" onblur="padNumberInput(this,2);" required class="form-control"> 
+							<span class="input-group-text timeSeparator">:</span>
+							<input id="talentStartTimeMM" name="talentStartTimeMM" type="number" value="00" min="0" max="59" onblur="padNumberInput(this,2);" required class="form-control"> 
+							<span class="input-group-text timeSeparator">:</span>
+							<input id="talentStartTimeSS" name="talentStartTimeSS" type="number" value="00" min="0" max="59" onblur="padNumberInput(this,2);" required class="form-control"> 
+						</div>
+						<p class="form-text text-muted small">Format: hh:mm:ss</p>
+					</div>
+					
+					
+				</div>
+				
+				<span class="formGroupTitle">Timing</span>
+				<div class="form-row">
+					
+					<div class="form-group col-lg-3">
+						<label>Sync start at: </label>
+						<div class="input-group ">
+							<input id="syncStartTimeHH" name="syncStartTimeHH" type="number" value="00" min="0" onchange="validateSyncTimings(this);" onblur="padNumberInput(this,2);" required class="form-control"> 
+							<span class="input-group-text timeSeparator">:</span>
+							<input id="syncStartTimeMM" name="syncStartTimeMM" type="number" value="00" min="0" max="59" onchange="validateSyncTimings(this);" onblur="padNumberInput(this,2);" required class="form-control"> 
+							<span class="input-group-text timeSeparator">:</span>
+							<input id="syncStartTimeSS" name="syncStartTimeSS" type="number" value="00" min="0" max="59" onchange="validateSyncTimings(this);" onblur="padNumberInput(this,2);" required class="form-control"> 
+							
+						</div>
+						<p class="form-text text-muted small">Format: hh:mm:ss</p>
+					</div>
+					<div class="form-group col-lg-2"></div>
+					<div class="form-group col-lg-3">
+						<label>Sync stop at: </label>
+						<div class="input-group ">
+							<input id="syncStopTimeHH" name="syncStopTimeHH" type="number" value="00" min="0" onchange="validateSyncTimings(this);" onblur="padNumberInput(this,2);" required class="form-control"> 
+							<span class="input-group-text timeSeparator">:</span>
+							<input id="syncStopTimeMM" name="syncStopTimeMM" type="number" value="00" min="0" max="59" onchange="validateSyncTimings(this);" onblur="padNumberInput(this,2);" required class="form-control"> 
+							<span class="input-group-text timeSeparator">:</span>
+							<input id="syncStopTimeSS" name="syncStopTimeSS" type="number" value="00" min="0" max="59" onchange="validateSyncTimings(this);" onblur="padNumberInput(this,2);" required class="form-control"> 
+							
+						</div>
+						<p class="form-text text-muted small">Format: hh:mm:ss</p>
+						
 					</div>
 				</div>
-				<div class="col-lg-6 col-lg-no-padding col-12 pb-1">
-					<div class="embed-responsive embed-responsive-16by9">
-						<iframe src="" id="talent" frameborder="0" scrolling="no" allowfullscreen></iframe>
+				<span class="formGroupTitle">Extra steps:</span>
+				<p class=" form-text text-muted small"> if you paused during the reaction</p>
+				<div id="extraPauses" class="pt-2">                                                                                                                  			
+				</div>
+				
+				<div id="divAddPause" class="form-row align-items-center">
+					<div class="form-group col-lg-3">
+						<button type="button" class="btn btn-secondary align-middle d-inline-flex" onclick="addExtraPause();" ><i class="material-icons pr-1">add</i> Add pause</button>
 					</div>
 				</div>
-			</div>
-			<div class="row">
-				<div id="DiscordMessage" class="pt-lg-3 py-2 mx-auto">For help or feedback, join us on <a href="https://discord.gg/cPrSypT" target="_blank"><img id="DiscordLogo" src="Discord-Logo-Color.png" height="20pw"/>Discord!<a/></div>
+				<input type="submit" class="btn btn-primary mt-lg-3" value="Generate reactionhub link" >
+			</form>
+			<div class="mt-lg-4 resultBox">
+				<span class="resultBoxTitle">Link : </span><a id="reactorHubLinkResult" class="generatedLink" target="_blank"></a>
 			</div>
 		</div>
 		
-		<script language="javascript" type="text/javascript" src="URLUtils.js"></script>
-		<script language="javascript" type="text/javascript" src="initialize.js"></script>
-		<script>
 		
-			function UpdateTheme()
-			{
-				//navbar
-				//reactorhubTitle
-				//SwitchThemeButton
-				var darkTheme = localStorage.getItem("darkTheme");
-				if(darkTheme == null) darkTheme = "false";
+		<script language="javascript" type="text/javascript" src="URLUtils.js"></script>
+		<script>
+			var reactorhubEndpoint = "https://jeole.github.io/reactorhub/index.html";
+			
+			function addExtraPause()  {
+			
+				var divAddPause = document.getElementById("divAddPause");
+				var extraPauses = document.getElementById("extraPauses");
+				extraPauses.insertAdjacentHTML('beforeend', '  	 																																	\
+				<div class="form-row align-items-center extraPauseRow">                                                                                                         					\
+																																																	\
+					<div class="form-group col-12	">                                                                                           			                    					\
+																																																	\
+							<div class="input-group  ">                                                                                         			                    					\
+								<label class="col-form-label col-2 align-middle d-inline-flex" >                                         			                    					        \
+									<i class="material-icons pr-1">                                                                             			                    					\
+									pause                                                                                                       			                    					\
+									</i>                                                                                                        			                    					\
+									Pause at:                                                                                                   			                    					\
+								</label>                                                                                                        			                    					\
+								<input id="extraPauseHH" name="extraPauseHH[]" type="number" value="00" min="0" onchange="validatePauseTimings();" onblur="padNumberInput(this,2);" required class="form-control ">                 \
+								<span class="input-group-text timeSeparator">:</span>                                                            			                    					\
+								<input id="extraPauseMM" name="extraPauseMM[]" type="number" value="00" min="0" max="59" onchange="validatePauseTimings();" onblur="padNumberInput(this,2);" required class="form-control ">       \
+								<span class="input-group-text timeSeparator">:</span>                                                            			                    					\
+								<input id="extraPauseSS" name="extraPauseSS[]" type="number" value="00" min="0" max="59" onchange="validatePauseTimings();" onblur="padNumberInput(this,2);" required class="form-control ">       \
+								<div class="col-1" ></div>                                                                            						                    					\
+								<label class="col-form-label col-2 align-middle d-inline-flex" >                                         			                    					        \
+									<i class="material-icons pr-1">                                                                             			                    					\
+									play_arrow                                                                                                  			                    					\
+									</i>                                                                                                        			                    					\
+									Resume at:                                                                                                  			                    					\
+								</label>                                                                                                        			                    					\
+								<input id="extraPlayHH" name="extraPlayHH[]" type="number" value="00" min="0" onchange="validatePauseTimings();" required class="form-control ">                  \
+								<span class="input-group-text timeSeparator">:</span>                                                           			                    					\
+								<input id="extraPlayMM" name="extraPlayMM[]" type="number" value="00" min="0" max="59" onchange="validatePauseTimings();" onblur="padNumberInput(this,2);" required class="form-control ">         \
+								<span class="input-group-text timeSeparator">:</span>                                                           			                    					\
+								<input id="extraPlaySS" name="extraPlaySS[]" type="number" value="00" min="0" max="59" onchange="validatePauseTimings();" onblur="padNumberInput(this,2);" required class="form-control ">         \
+								<button type="button" class="btn btn-danger ml-4 align-middle d-inline-flex" onclick="removeExtraPause(this);" >                                					\
+									<i class="material-icons pr-1">remove</i> Remove pause                                                                                      					\
+								</button>                                                                                                                                       					\
+							</div>                                                                                                              			                    					\
+					</div>	                                                                                                                    			                    					\
+				</div>                                                                                                                          			                    					\
+				');
 				
-				var button = document.getElementById("SwitchThemeButton");
-				
-				if(darkTheme === "true"){
-					document.getElementById("navbar").classList.add("navbar-dark");
-					document.getElementById("DiscordMessage").classList.add("text-light");
-					document.getElementById("reactorhubTitle").classList.add("dark-theme");
-					document.body.classList.add("dark-theme");
-					button.innerHTML = "Light theme";
-					button.classList.remove("btn-dark");
-					button.classList.add("btn-light");
-				}
-				else{
-					document.getElementById("navbar").classList.remove("navbar-dark");
-					document.getElementById("DiscordMessage").classList.remove("text-light");
-					document.getElementById("reactorhubTitle").classList.remove("dark-theme");
-					document.body.classList.remove("dark-theme");
-					button.innerHTML = "Dark theme";
-					button.classList.remove("btn-light");
-					button.classList.add("btn-dark");
-				}
-				
-				
-			}
-			function SwitchTheme()
-			{
-				var darkTheme = localStorage.getItem("darkTheme");
-				if(darkTheme === null ) darkTheme = "false";
-				
-				localStorage.setItem("darkTheme", (darkTheme === "true")?"false":"true");
-				UpdateTheme();
+				validatePauseTimings();
 			}
 			
-		
-			if (localStorage.provider == "YT") 
+			function removeExtraPause(button)
 			{
-				document.getElementById('talent').src='talentYT.html';
-			} else if (localStorage.provider == "DM")  
+				var divPause = button.closest(".extraPauseRow");
+				var extraPauses = document.getElementById("extraPauses");
+				extraPauses.removeChild(divPause);
+			}
+			
+			function generateLink(form)
 			{
-				document.getElementById('talent').src='talentDM.html';
-			} else if (localStorage.provider == "VM")  
+				/*example of link : 
+				//https://robkreacts.github.io/reactorhub/index?reactor=https://www.youtube.com/watch?v=u1RSNc0BpyY&talent=https://www.youtube.com/watch?v=jRc9dbgiBPI&reactorVOL=90&talentVOL=10&Control=00:3:02,play&Start=00:02:52 
+				*/
+
+			
+				var reactorURL = form.reactorURL.value;
+				var talentURL = form.talentURL.value;
+				var reactorVOL = form.reactorVOL.value;
+				var talentVOL = form.talentVOL.value;
+				var startTime = form.startTimeHH.value + ":" + form.startTimeMM.value + ":" + form.startTimeSS.value;
+				var syncStartTime = form.syncStartTimeHH.value + ":" + form.syncStartTimeMM.value + ":" + form.syncStartTimeSS.value;
+				var syncStopTime = form.syncStopTimeHH.value + ":" + form.syncStopTimeMM.value + ":" + form.syncStopTimeSS.value;
+				var talentStartTime = form.talentStartTimeHH.value + ":" + form.talentStartTimeMM.value + ":" + form.talentStartTimeSS.value;
+				
+				var extraPauses = "";
+				
+				var arrayExtraPauseHH = form.querySelectorAll("input[name='extraPauseHH[]']");
+				var arrayExtraPauseMM = form.querySelectorAll("input[name='extraPauseMM[]']");
+				var arrayExtraPauseSS = form.querySelectorAll("input[name='extraPauseSS[]']");
+				var arrayExtraPlayHH = form.querySelectorAll("input[name='extraPlayHH[]']");
+				var arrayExtraPlayMM = form.querySelectorAll("input[name='extraPlayMM[]']");
+				var arrayExtraPlaySS = form.querySelectorAll("input[name='extraPlaySS[]']");
+				
+				for(var i = 0; i < arrayExtraPauseHH.length; i++)
+				{
+					extraPauses += ";";
+					extraPauses += arrayExtraPauseHH[i].value + ":" + arrayExtraPauseMM[i].value + ":" + arrayExtraPauseSS[i].value;
+					extraPauses += ",pause;";
+					extraPauses += arrayExtraPlayHH[i].value + ":" + arrayExtraPlayMM[i].value + ":" + arrayExtraPlaySS[i].value;
+					extraPauses += ",play";
+					
+				}
+				
+				var stopControl = "";
+				
+				if(syncStopTime != "00:00:00")
+				{
+					stopControl = ";" + syncStopTime + ",pause";
+				}
+
+				var generatedLink = reactorhubEndpoint +
+									"?reactor=" +
+									encodeURIComponent(reactorURL) +
+									"&talent=" +
+									encodeURIComponent(talentURL) + 
+									"&reactorVOL=" +
+									reactorVOL +
+									"&talentVOL=" +
+									talentVOL +
+									"&Start=" +
+									startTime +
+									"&talentStart=" +
+									talentStartTime +
+									"&Control=" +
+									syncStartTime + 
+									",play" +
+									extraPauses +
+									stopControl ;
+
+				document.getElementById('reactorHubLinkResult').innerHTML = generatedLink;
+				document.getElementById('reactorHubLinkResult').href = generatedLink;
+			}
+			
+			function padNumberInput(element, size)
 			{
-				document.getElementById('talent').src='talentVimeo.html';
-			} else if (localStorage.provider == "Streamable")  
-			{
-				document.getElementById('talent').src='talentStreamable.html';
+				element.value = pad(element.value, size);
+			}
+			// https://stackoverflow.com/questions/10073699/pad-a-number-with-leading-zeros-in-javascript (I'm lazy :o)
+			function pad(n, width, z) {
+			  z = z || '0';
+			  n = n + '';
+			  return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
 			}
 						
-			UpdateTheme();
+			function validateTalentUrl(inputElem)
+			{	
+				
+				var url = inputElem.value;
+				var provider = URLUtils.detectProvider(url);
+				
+				if(provider === "UNKNOWN")
+				{
+					// url is not valid
+					console.log("bad talent video url!");
+					inputElem.setCustomValidity("Talent URL not supported");
+				}else
+				{
+					inputElem.setCustomValidity("");
+					// check if we can extract the talent video start time from url
+					var talentStartTimeInSeconds = 0;
+					switch(provider){
+						case "YT":
+							talentStartTimeInSeconds = URLUtils.YT.getStartTimeFromURL(url);
+						break;
+						case "DM":
+							talentStartTimeInSeconds = URLUtils.DM.getStartTimeFromURL(url);
+						break;
+						case "VM":
+							talentStartTimeInSeconds = URLUtils.VM.getStartTimeFromURL(url);
+						break;
+						case "Streamable":
+							talentStartTimeInSeconds = URLUtils.Streamable.getStartTimeFromURL(url);
+						break;
+					}
+					
+					// update talent start time
+					var talentStartHours = Math.floor(talentStartTimeInSeconds / 3600);
+					talentStartTimeInSeconds %= 3600;
+					var talentStartMinutes = Math.floor(talentStartTimeInSeconds / 60);
+					talentStartTimeInSeconds %= 60;
+					var talentStartSeconds = talentStartTimeInSeconds;
+					
+					document.getElementById("talentStartTimeHH").value = pad(talentStartHours, 2);
+					document.getElementById("talentStartTimeMM").value = pad(talentStartMinutes, 2);
+					document.getElementById("talentStartTimeSS").value = pad(talentStartSeconds, 2);
+					
+				}
+			}
+			
+			
+			function validatePauseTimings()
+			{			
+				var form = document.getElementById("form");
+			
+				var arrayExtraPauseHH = form.querySelectorAll("input[name='extraPauseHH[]']");
+				var arrayExtraPauseMM = form.querySelectorAll("input[name='extraPauseMM[]']");
+				var arrayExtraPauseSS = form.querySelectorAll("input[name='extraPauseSS[]']");
+				var arrayExtraPlayHH = form.querySelectorAll("input[name='extraPlayHH[]']");
+				var arrayExtraPlayMM = form.querySelectorAll("input[name='extraPlayMM[]']");
+				var arrayExtraPlaySS = form.querySelectorAll("input[name='extraPlaySS[]']");
+				
+				var syncStartTime = parseInt(form.syncStartTimeHH.value,10) * 3600 + parseInt(form.syncStartTimeMM.value,10) * 60 + parseInt(form.syncStartTimeSS.value,10);
+				var syncStopTime = parseInt(form.syncStopTimeHH.value,10) * 3600 + parseInt(form.syncStopTimeMM.value,10) * 60 + parseInt(form.syncStopTimeSS.value,10);
+				
+				
+				for(var i = 0; i < arrayExtraPauseHH.length; i++)
+				{
+					arrayExtraPauseHH[i].setCustomValidity("");
+					arrayExtraPauseMM[i].setCustomValidity("");
+					arrayExtraPauseSS[i].setCustomValidity("");
+					arrayExtraPlayHH[i].setCustomValidity("");
+					arrayExtraPlayMM[i].setCustomValidity("");
+					arrayExtraPlaySS[i].setCustomValidity("");
+					
+					var pauseStartTime = parseInt(arrayExtraPauseHH[i].value,10) * 3600 + parseInt(arrayExtraPauseMM[i].value,10) * 60 + parseInt(arrayExtraPauseSS[i].value,10);
+					var pauseResumeTime = parseInt(arrayExtraPlayHH[i].value,10) * 3600 + parseInt(arrayExtraPlayMM[i].value,10) * 60 + parseInt(arrayExtraPlaySS[i].value,10);
+					
+					// check that sync start < pause start (< sync stop)
+					if(pauseStartTime <= syncStartTime)
+					{
+						arrayExtraPauseMM[i].setCustomValidity("Pause timer incorrect: pause starts before the start of the synchronized reaction");
+					}
+					
+					if(syncStopTime > 0 && pauseStartTime >= syncStopTime)
+					{
+						arrayExtraPauseMM[i].setCustomValidity("Pause timer incorrect: pause starts after the end of the synchronized reaction");
+					}
+					
+					// check that pause start > previous pause resume
+					if(i > 0)
+					{
+						var previousPauseResumeTime = parseInt(arrayExtraPlayHH[i-1].value,10) * 3600 + parseInt(arrayExtraPlayMM[i-1].value,10) * 60 + parseInt(arrayExtraPlaySS[i-1].value,10);
+						
+						if(pauseStartTime < previousPauseResumeTime)
+						{
+							arrayExtraPauseMM[i].setCustomValidity("Pause timer incorrect: pause can't start before the previous one ended");
+						}
+					}
+					
+					// check that pause resume time < sync stop
+					if(syncStopTime > 0 && pauseResumeTime >= syncStopTime)
+					{
+						arrayExtraPlayMM[i].setCustomValidity("Pause timer incorrect: pause end after the end of the synchronized reaction");
+					}
+					
+					// check that pause end > pause start
+					if(pauseStartTime >= pauseResumeTime)
+					{
+						arrayExtraPlayMM[i].setCustomValidity("Pause timer incorrect: resume time is smaller than pause time");
+					}
+				}
+			}
+			
+			
+			function validateSyncTimings()
+			{
+				var form = document.getElementById("form");
+
+				form.syncStartTimeMM.setCustomValidity("");
+				form.syncStopTimeMM.setCustomValidity("");
+				
+				var syncStartTime = parseInt(form.syncStartTimeHH.value,10) * 3600 + parseInt(form.syncStartTimeMM.value,10) * 60 + parseInt(form.syncStartTimeSS.value,10);
+				var syncStopTime = parseInt(form.syncStopTimeHH.value,10) * 3600 + parseInt(form.syncStopTimeMM.value,10) * 60 + parseInt(form.syncStopTimeSS.value,10);
+				
+				if((syncStopTime > 0) &&  (syncStopTime <= syncStartTime))
+				{
+					form.syncStopTimeMM.setCustomValidity("Sync timers incorrect: sync stop time should be greater than sync start time");
+				}
+				
+				//revalidate pause timing since they can be (in)validated with the sync timing changes
+				validatePauseTimings();
+			}
+			
+						
+						
 		</script>
-		
-		
 	</body>
 </html>
